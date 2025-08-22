@@ -1,0 +1,19 @@
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+deps/deps.jl
+data
+
+.ipynb_checkpoints
+*backkup*.jl
+
+# Inputs of job array example
+ex1_job_array_in.csv
+
+# Outputs of second exercise
+ex2_out*.csv
+ex2_*.png
+
+# Other unnecessary files
+julia-*.out
+.nfs*
