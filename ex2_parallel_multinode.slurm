@@ -1,18 +1,15 @@
 #!/bin/bash 
 ## Submit job to our class's allocation
-#SBATCH --partition=sla-prio
-#SBATCH --account=ebf11-fa23
-## Alternatively could comment out the two lines above (by adding a second # at the beginning of each line)
-# and uncomment the lines below (by removing one #) to use the "Open" allocation
-##SBATCH --partition=open 
+#SBATCH --partition=standard
+#SBATCH --account=hpc4astro_crch_fall2025
 
 ## Time requested: 0 hours, 5 minutes, 0 seconds
 #SBATCH --time=0:15:00 
 
 ## Ask for one core on each of four nodes
-#SBATCH --nodes=4 
+#SBATCH --nodes=2
 #SBATCH --ntasks-per-node=1
-#SBATCH --ntasks=4 
+#SBATCH --ntasks=2 
 
 ## Promise that each processor will use no more than 1GB of RAM
 #SBATCH --mem-per-cpu=1GB
@@ -40,14 +37,13 @@ echo $SLURM_NODELIST
 #env |grep SLURM                 # Uncomment to print slurm environment variables
 
 echo "Activing environment with that provides Julia 1.9.2"
-source /storage/group/RISE/classroom/astro_528/scripts/env_setup
+source /storage/ehome/ebf11/hpc4astro/astro_528/scripts/env_setup
 
 echo "About to change into $SLURM_SUBMIT_DIR"
 cd $SLURM_SUBMIT_DIR            # Change into directory where job was submitted from
 
 date
 echo "About to start Julia, using Slurm Cluster Manager to connect to all $SLURM_NNODES nodes."
-#julia --project=. -e 'include("setup_slurm_manager.jl"); using Distributed; addprocs(manager, exeflags=["--project=.",], );  include("ex2_run_nb.jl") '  
 julia --project=. -e 'include("setup_slurm_manager.jl"); include("ex2_run_nb.jl") '  
 echo "Julia exited"
 date

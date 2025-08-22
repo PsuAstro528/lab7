@@ -1,17 +1,14 @@
 #!/bin/bash 
 ## Submit job to our class's allocation
-#SBATCH --partition=sla-prio
-#SBATCH --account=ebf11-fa23
-## Alternatively could comment out the two lines above (by adding a second # at the beginning of each line)
-# and uncomment the lines below (by removing one #) to use the "Open" allocation
-##SBATCH --partition=open 
+#SBATCH --partition=standard
+#SBATCH --account=hpc4astro_crch_fall2025
 
 ## Time requested: 0 hours, 5 minutes, 0 seconds
 #SBATCH --time=0:15:00 
 
 ## Ask for one core on each of four nodes
-#SBATCH --nodes=4 
-#SBATCH --ntasks-per-node=4
+#SBATCH --nodes=2 
+#SBATCH --ntasks-per-node=8
 #SBATCH --ntasks=16
 
 ## Promise that each processor will use no more than 1GB of RAM
@@ -40,7 +37,7 @@ echo $SLURM_NODELIST
 #env |grep SLURM                 # Uncomment to print slurm environment variables
 
 echo "Activing environment with that provides Julia 1.9.2"
-source /storage/group/RISE/classroom/astro_528/scripts/env_setup
+source /storage/ehome/ebf11/hpc4astro/astro_528/scripts/env_setup
 
 echo "About to change into $SLURM_SUBMIT_DIR"
 cd $SLURM_SUBMIT_DIR            # Change into directory where job was submitted from
