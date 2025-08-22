@@ -1,10 +1,10 @@
 # Astro 528 Lab 7
 
-For this lab you will be submitting jobs to the Roar Collab computer cluster that is part of Penn State's [Advanced CyberInfrastructure (ACI)](https://ics.psu.edu/computing-services/system-specifications/).  The class has already been using Roar Collab in previous labs.  We've used developed code and run it interactively using the BYOE JupyterLab environment and Pluto servers provided for the class.  These are very helpful for code development, data visualization and small scale tests of your code, including a few processors.  However, the real power of having access to a computer cluster is being able to access dozens or hundreds of processor cores.
+For this lab you need to submit jobs to the Lynx cluster and can't use your own computer.  While the class has already been using Lynx Collab in previous labs, we've used it mostly interactively using the JupyterLab environment and Pluto servers provided for the class.  These are very helpful for code development, data visualization and small scale tests of your code, including a few processors.  However, the real power of having access to a computer cluster is being able to access dozens or hundreds of processor cores.
 
 A typical science application is to run run dozens, hundreds or even thousands of similar calculations.  For that, scientists need to be able to automate their calculations via scripts.  Those scripts will also tell the computer cluster (technically the *resource manager* and the *scheduler*) the information necessary to assign you jobs to a computer that has the requested configuration and to schedule that in a fair way given all the other jobs that haven submitted.  
 
-## Exercise 1:  Using the ICDS-ACI Roar Clusters
+## Exercise 1:  Using an ICDS Clusters (Lynx or Roar Collab)
 #### Goals:
 - Submit a batch job via Slurm
 - Read and write data from batch job
@@ -49,14 +49,6 @@ Inspect this file to make sure the job behaved as expected.  If so, use git to a
 If any of your attempts don't work, then fix the issue, try again.  Once you get it to work, delete the old output from the broken jobs and only add/commit/push the output once you've get it working.
 
 ### Submitting & Running a Parallel Job
-
-Before we run code in parallel spanning multiple processes, we need to setup your ssh keys to allow processes to communicate with each other without you constantly entering passwords.  To do that run the following commands on Roar Collab.
-```sh
-touch ~/.ssh/authorized_keys; 
-cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys 
-chmod 600 ~/.ssh/authorized_keys 
-```
-You shouldn't need to run those again.  
 
 7. Now, test the parallel code (first using using just a few cores all on one compute node).  Look over the file [ex1_parallel_1node.slurm](ex1_parallel_1node.slurm) and note how it differs from [ex1_serial.slurm](ex1_serial.slurm).  Then submit a batch job using
  ```sh
@@ -156,7 +148,7 @@ INSERT RESPONSE
 
 3.  (I expect that some students will only get to this and subsequent steps after the due date for Lab 7.  But I include them here for any who are ready to start benchmarking their parallel code now.)  Once you have a parallel version of your project code working in an interactive environment, then make a Slurm script that runs the parallel version of your code.  Run the script, make sure that it gives the expected results and that it's actually using the processors its been assigned (as opposed to running in serial).
 
-4.  Benchmark the performance of your code as a function of the number of processors used, keeping the problem size fixed.  Make a plot showing the *strong scaling* of the performance critical section your code (i.e., run time as a function of problem size) as the number of processors varies from 1, 2, 4, 8, 12, 16, 20, 24.  How does the performance benefit compare to a linear scaling?  If your code is scaling well even at >16 processors (i.e., the run time continues to decrease nearly linearly with number of processors), then keep increasing the number of processors until the run time levels off (or you reach 100 cores).
+4.  Benchmark the performance of your code as a function of the number of processors used, keeping the problem size fixed.  Make a plot showing the *strong scaling* of the performance critical section your code (i.e., run time as a function of problem size) as the number of processors varies from 1, 2, 4, 8, 12, 16, 20, 24, and 32.  How does the performance benefit compare to a linear scaling?  If your code is scaling well even at >16 processors (i.e., the run time continues to decrease nearly linearly with number of processors), then keep increasing the number of processors until the run time levels off (maximum of 48 cores for shared memory jobs, maximum of 96 cores for distributed memeory jobs).
 
 5.  Repeat the benchmarks from step 4, but using at least a few problem sizes (spanning at least two orders of magnitude if possible, i.e., big enough so that you can see the benefits of parallelism).
 
