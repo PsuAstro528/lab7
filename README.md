@@ -92,7 +92,7 @@ To check the status of each individual element of the job array, you can use `sq
 
 #### Step-by-step Instructions:
 
-In this exercise, we'll perform the same calculations as in [exercise 2 of lab 6](https://github.com/PsuAstro528/lab6-start/blob/master/ex2.ipynb).  However, instead of using a shared-memory model (possible on a multi-core workstation) as in Lab 6, we will run the calculations on multiple compute nodes spread across the [Roar Collab cluster](https://www.icds.psu.edu/roar-collab-user-guide/) using a distributed memory model.
+In this exercise, we'll perform the same calculations as in [exercise 2 of lab 6](https://github.com/PsuAstro528/lab6/blob/master/ex2.ipynb).  However, instead of using a shared-memory model (possible on a multi-core workstation) as in Lab 6, we will run the calculations on multiple compute nodes spread across the [Roar Collab cluster](https://www.icds.psu.edu/roar-collab-user-guide/) using a distributed memory model.
 
 You're welcome to inspect or even run the [ex2.ipynb notebook](ex2.ipynb) one cell at a time to see how it works.  However, the main point of this lab is to see how to run such a calculation in parallel over multiple processor cores that are not necessarily on the same processor.  (Then, you'll compare the performance depending on whether the processors assigned are on the same node or different nodes.)
 
