@@ -6,13 +6,12 @@
 ## Time requested: 0 hours, 5 minutes, 0 seconds
 #SBATCH --time=0:05:00 
 
-## Ask for one core on each of four nodes
-#SBATCH --nodes=2 
-#SBATCH --ntasks-per-node=1
-#SBATCH --ntasks=2 
+## Ask for a total of 6 tasks spread over 2 nodes
+#SBATCH --nodes=2     # Force slurm to spread job over two nodes
+#SBATCH --ntasks=6 
 
-## Promise that each processor will use no more than 1GB of RAM
-#SBATCH --mem-per-cpu=1GB
+## Promise that each CPU will use no more than 4GB of RAM
+#SBATCH --mem=4GB
 
 ## Save STDOUT and STDERR into one file (%j will expand to become the SLURM job id)
 #SBATCH --output=ex1_parallel_2node_%j.log
@@ -40,9 +39,23 @@ source /storage/ehome/ebf11/hpc4astro/astro_528/scripts/env_setup
 echo "About to change into $SLURM_SUBMIT_DIR"
 cd $SLURM_SUBMIT_DIR            # Change into directory where job was submitted from
 
-julia --version
+export JULIA_PROJECT=`pwd`      # This "should" cause all worker processes to have same project directory, but I still had to manually set it.
+
+#julia --version                 # To check that you're using the version of Julia you expect
+#env |grep JULIA                # To check JULIA environment variables
+#env |grep SLURM                # To check slurm environment variables
+
+echo "Create list of all nodes that you should connect to (repeating number of times based on number of CPU cores allocated)"
+srun -l /usr/bin/hostname | sort | awk '{print $2}' > machinefile.$SLURM_JOB_ID
+
 date
-echo "About to start Julia, using Slurm Cluster Manager to connect to one worker process on each of $SLURM_NNODES nodes."
-julia --project=. -e 'include("setup_slurm_manager.jl"); include("ex1_parallel.jl") '  
+echo "About to start Julia, using ssh to connect to each CPU core allocated by slurm as a separate process"
+
+julia --machine-file machinefile.$SLURM_JOB_ID -e 'using Distributed; using Pkg; Pkg.precompile(); @everywhere using Pkg; @everywhere Pkg.activate("."); include("ex1_parallel.jl") ' 
+
 echo "Julia exited"
 date
+
+# Cleanup temporary file
+rm machinefile.$SLURM_JOB_ID
+

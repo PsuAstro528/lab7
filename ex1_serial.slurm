@@ -30,7 +30,7 @@ echo "Starting job $SLURM_JOB_NAME"
 echo "Job id: $SLURM_JOB_ID"
 date
 
-echo "Activing environment with that provides Julia 1.9.2"
+echo "Activing environment with that provides Julia 1.11.2"
 source /storage/ehome/ebf11/hpc4astro/astro_528/scripts/env_setup
 
 echo "About to change into $SLURM_SUBMIT_DIR"
