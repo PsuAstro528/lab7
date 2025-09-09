@@ -9,10 +9,10 @@
 ## Ask for one core on each of four nodes
 #SBATCH --nodes=2 
 #SBATCH --ntasks-per-node=8
-#SBATCH --ntasks=16
+###SBATCH --ntasks=16
 
 ## Promise that each processor will use no more than 1GB of RAM
-#SBATCH --mem-per-cpu=1GB
+#SBATCH --mem=4GB
 
 ## Save STDOUT and STDERR into one file (%j will expand to become the SLURM job id)
 #SBATCH --output=ex2_parallel_combo_%j.log
@@ -36,16 +36,21 @@ echo $SLURM_NODELIST
 
 #env |grep SLURM                 # Uncomment to print slurm environment variables
 
-echo "Activing environment with that provides Julia 1.9.2"
+echo "Activing environment with that provides Julia 1.11.2"
 source /storage/ehome/ebf11/hpc4astro/astro_528/scripts/env_setup
 
 echo "About to change into $SLURM_SUBMIT_DIR"
 cd $SLURM_SUBMIT_DIR            # Change into directory where job was submitted from
 
+export JULIA_PROJECT=`pwd`
+scontrol show hostnames > machinefile.$SLURM_JOB_ID   # Don't repeat nodes
+
 date
-echo "About to start Julia, using Slurm Cluster Manager to connect to $SLURM_NTASKS_PER_NODE worker procesess on each of $SLURM_NNODES nodes."
+echo "About to start Julia, using machine file to ssh to each of $SLURM_NNODES nodes, starting $SLURM_NTASKS_PER_NODE threads on each."
+julia --project=. -t $SLURM_NTASKS_PER_NODE --machine-file machinefile.$SLURM_JOB_ID   ex2_run_nb.jl
+#echo "About to start Julia, using Slurm Cluster Manager to connect to $SLURM_NTASKS_PER_NODE worker procesess on each of $SLURM_NNODES nodes."
 #julia --project=. -e 'using Distributed, ClusterManagers; addprocs(SlurmManager(parse(Int,ENV["SLURM_NNODES"])*parse(Int,ENV["SLURM_NTASKS_PER_NODE"])), exeflags=["--project=.",], );   include("ex2_run_nb.jl") '  
 #julia --project=. -e 'using Distributed, SlurmClusterManager; addprocs(SlurmManager(), exeflags=["--project=.",], );   include("ex2_run_nb.jl") '  
-julia --project=. -e 'include("setup_slurm_manager.jl"); include("ex2_run_nb.jl") '  
+#julia --project=. -e 'include("setup_slurm_manager.jl"); include("ex2_run_nb.jl") '  
 echo "Julia exited"
 date
