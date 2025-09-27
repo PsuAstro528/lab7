@@ -1,0 +1,9 @@
+BootStrap: docker
+From: julia:1.11.6
+
+%post
+   mkdir -p /scratch /work 
+
+%labels
+   Setup Julia.  Create mountpoints for Roar and Lynx.
+

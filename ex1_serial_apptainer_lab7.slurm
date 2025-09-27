@@ -14,12 +14,12 @@
 #SBATCH --mem-per-cpu=1GB
 
 ## Save STDOUT and STDERR into one file (%j will expand to become the SLURM job id)
-#SBATCH --output=ex1_serial_%j.log
+#SBATCH --output=ex1_apptainer_%j.log
 ## Optionally could uncomment line below to write STDERR to a separate file
-##SBATCH --error=ex1_serial_%j.stderr  
+##SBATCH --error=ex1_apptainer_%j.stderr  
 
 ## Specificy job name, so easy to find using squeue –u
-#SBATCH --job-name=ex1_serial
+#SBATCH --job-name=ex1_apptainer
 
 ## Uncomment next two lines (by removing one of #'s in each line) and replace with your email if you want to be notifed when jobs start and stop
 ##SBATCH --mail-user=YOUR_EMAIL_HERE@psu.edu
@@ -36,14 +36,10 @@ date
 echo "About to change into $SLURM_SUBMIT_DIR"
 cd $SLURM_SUBMIT_DIR            # Change into directory where job was submitted from
 
-
-
 date
-echo "About to ensure Julia depot has instantiated dependencies in same Julia Depot as used for rest of class (likely will cause problems if calling Python or R)"
-apptainer run -H ~/:/home -B /scratch/${USER}:/scratch,${SLURM_SUBMIT_DIR}:/work ~/hpc4astro/containers/julia.sif julia --project=/work -e 'import Pkg; Pkg.instantiate()'
-date
+# No need to install packages, since we're assuming we're using a container already built to include them
 echo "About to run Julia"
-apptainer run -H ~/:/home -B /scratch/$USER:/scratch,$SLURM_SUBMIT_DIR:/work ~/hpc4astro/containers/julia.sif julia --project=/work  -- /work/ex1_serial.jl 1000000000
+apptainer run -H ~/container_home -B $PWD:/work ~/hpc4astro/containers/julia_lab7.sif julia --project=/work  -- /work/ex1_serial.jl 1000000000
 echo "Julia exited"
 date
 

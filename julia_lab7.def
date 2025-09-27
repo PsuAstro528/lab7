@@ -1,0 +1,41 @@
+BootStrap: docker
+From: julia:1.11.6
+
+%post
+   # Make mount points for common directories
+   mkdir -p /work 
+   # Make mount points for Lynx filesystems (important if not running from Lynx)
+   mkdir -p /storage/ehome /storage/ework /storage/egroup /storage/icds /tmp
+   # Make mount points for Roar Collab filesystems (important if not running from Roar Collab)
+   mkdir -p /storage/home /storage/work /storage/group /storage/icds /scratch
+
+   # Install git, so caan download your project from git repo
+   apt-get -y update && apt-get install -y git
+
+   # Make directory for julia depot for packages preinstalled into the container
+   mkdir -p /julia_depot
+   JULIA_DEPOT_PATH="/julia_depot"
+
+   # Set repository to be cloned into container
+   REPO_URL="https://github.com/PsuAstro528/lab7.git" # Use http version here
+   PKG_DIR="${JULIA_DEPOT_PATH}/dev/lab7"
+
+   # Clone the Git repository into the depot (in dev subdir)
+   git clone ${REPO_URL} ${PKG_DIR}
+
+   # Run Julia to install dependencies for the newly cloned package
+   julia --project=@. -e 'using Pkg; Pkg.develop(path="'${PKG_DIR}'"); Pkg.instantiate(); Pkg.precompile(); '
+
+   # Install more common Julia packages into container depot
+   # julia --project=@. -e 'import Pkg; Pkg.add(["Pluto","IJulia"]); Pkg.instantiate(); Pkg.precompile(); '
+
+   # Clean up if installed packages with apt
+   apt-get clean
+   rm -rf /var/lib/apt/lists/*
+
+%environment
+   export JULIA_DEPOT_PATH=":/julia_depot"
+
+%labels
+   Setup Julia.  Create mountpoints for Roar and Lynx.  Download repo.  Install and precompile packages used by repo.
+
