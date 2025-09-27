@@ -38,7 +38,7 @@ cd $SLURM_SUBMIT_DIR            # Change into directory where job was submitted 
 
 date
 echo "About to start Julia"
-julia --project=. ex1_serial.jl
+julia --project=. -- ex1_serial.jl 1000000000
 echo "Julia exited"
 date
 

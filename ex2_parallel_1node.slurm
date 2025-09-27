@@ -9,7 +9,7 @@
 ## Ask for multiple CPU cores on one node
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=4
-#SBATCH --ntasks=4 
+###SBATCH --ntasks=4 
 
 ## Promise that each processor will use no more than 1GB of RAM
 #SBATCH --mem-per-cpu=1GB
@@ -34,13 +34,13 @@ date
 echo "This job was assigned the following nodes"
 echo $SLURM_NODELIST
 
+#env |grep SLURM                 # Uncomment to print slurm environment variables
+
 echo "Activing environment with that provides Julia 1.9.2"
 source /storage/ehome/ebf11/hpc4astro/astro_528/scripts/env_setup
 
 echo "About to change into $SLURM_SUBMIT_DIR"
 cd $SLURM_SUBMIT_DIR            # Change into directory where job was submitted from
-
-# env |grep SLURM               # Uncomment if you want to see all the environment variables set
 
 date
 echo "About to start Julia, using $SLURM_TASKS_PER_NODE CPU cores on one node"

@@ -42,7 +42,7 @@ cd $SLURM_SUBMIT_DIR            # Change into directory where job was submitted 
 
 date
 echo "About to start Julia, using $SLURM_TASKS_PER_NODE worker processes on assigned node"
-julia --project=. -p $SLURM_TASKS_PER_NODE ex1_parallel.jl
+julia --project=. -p $SLURM_TASKS_PER_NODE -- ex1_parallel.jl 1000000000
 echo "Julia exited"
 date
 

@@ -6,12 +6,15 @@
 ## Time requested: 0 hours, 5 minutes, 0 seconds
 #SBATCH --time=0:15:00 
 
-## Ask for four cores on each of two nodes
+## Ask for eight cores on each of two nodes
 #SBATCH --nodes=2
-#SBATCH --ntasks-per-node=4
+#SBATCH --ntasks-per-node=8
 
+## Promise that each processor will use no more than 1GB of RAM
+#SBATCH --mem-per-cpu=1GB
+## OR 
 ## Promise that each processor will use no more than 8GB of RAM
-#SBATCH --mem=8GB
+##SBATCH --mem=8GB
 
 ## Save STDOUT and STDERR into one file (%j will expand to become the SLURM job id)
 #SBATCH --output=ex2_parallel_2node_%j.log
@@ -33,7 +36,6 @@ date
 echo "This job was assigned the following nodes"
 echo $SLURM_NODELIST
 
-#env |grep JULIA
 #env |grep SLURM                 # Uncomment to print slurm environment variables
 
 echo "Activing environment with that provides Julia 1.11.2"

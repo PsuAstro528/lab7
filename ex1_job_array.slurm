@@ -41,7 +41,7 @@ cd $SLURM_SUBMIT_DIR            # Change into directory where job was submitted 
 
 date
 echo "About to start Julia"
-julia --project=. ex1_job_array.jl $SLURM_ARRAY_TASK_ID 
+julia --project=. -- ex1_job_array.jl ex1_job_array_in.csv $SLURM_ARRAY_TASK_ID 
 echo "Julia exited"
 date
 

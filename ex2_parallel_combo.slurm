@@ -6,10 +6,10 @@
 ## Time requested: 0 hours, 5 minutes, 0 seconds
 #SBATCH --time=0:15:00 
 
-## Ask for one core on each of four nodes
+## Ask for eight CPU cores on each of two nodes
 #SBATCH --nodes=2 
 #SBATCH --ntasks-per-node=8
-#SBATCH --ntasks=16
+####SBATCH --ntasks=16   
 
 ## Promise that each processor will use no more than 1GB of RAM
 #SBATCH --mem-per-cpu=1GB

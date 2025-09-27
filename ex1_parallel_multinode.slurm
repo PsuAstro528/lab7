@@ -51,7 +51,8 @@ srun -l /usr/bin/hostname | sort | awk '{print $2}' > machinefile.$SLURM_JOB_ID
 date
 echo "About to start Julia, using ssh to connect to each CPU core allocated by slurm as a separate process"
 
-julia --machine-file machinefile.$SLURM_JOB_ID -e 'using Distributed; using Pkg; Pkg.precompile(); @everywhere using Pkg; @everywhere Pkg.activate("."); include("ex1_parallel.jl") ' 
+julia --project=. --machine-file machinefile.$SLURM_JOB_ID -- ex1_parallel.jl 1000000000
+#julia --machine-file machinefile.$SLURM_JOB_ID -e 'using Distributed; using Pkg; Pkg.precompile(); @everywhere using Pkg; @everywhere Pkg.activate("."); include("ex1_parallel.jl") ' 
 
 echo "Julia exited"
 date
