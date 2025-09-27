@@ -18,13 +18,15 @@ function calc_pi_monte_carlo(n_throws::Integer; n_in_circle::Integer = calc_num_
    4 * (n_in_circle/n_throws)
 end
 
-if length(ARGS) < 1
-   @error "Usage: julia --project -p num_workers -- ex1_parallel.jl num_throws"
-   exit(1)
-else
-    n = parse(Int64,ARGS[1])
-    @assert n >= 100
+if !isdefined(Main, :n) 
+   if length(ARGS) < 1
+      @error "Usage: julia --project -p num_workers -- ex1_parallel.jl num_throws"
+      exit(1)
+   else
+       n = parse(Int64,ARGS[1])
+   end
 end
+@assert n >= 100
 
 n_per_worker = floor(Int64,n//nworkers())
 n_actual = n_per_worker * nworkers()

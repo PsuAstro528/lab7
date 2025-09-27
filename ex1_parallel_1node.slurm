@@ -9,7 +9,7 @@
 ## Ask for one node with four cpus per node
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=4
-#SBATCH --ntasks=4 
+##SBATCH --ntasks=4 
 
 ## Promise that each processor will use no more than 1GB of RAM
 #SBATCH --mem-per-cpu=1GB

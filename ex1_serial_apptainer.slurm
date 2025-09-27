@@ -43,7 +43,7 @@ echo "About to ensure Julia depot has instantiated dependencies in same Julia De
 apptainer run -H ~/:/home -B /scratch/${USER}:/scratch,${SLURM_SUBMIT_DIR}:/work ~/hpc4astro/containers/julia.sif julia --project=/work -e 'import Pkg; Pkg.instantiate()'
 date
 echo "About to run Julia"
-apptainer run -H ~/:/home -B /scratch/$USER:/scratch,$SLURM_SUBMIT_DIR:/work ~/hpc4astro/containers/julia.sif julia --project=/work  /work/ex1_serial.jl
+apptainer run -H ~/:/home -B /scratch/$USER:/scratch,$SLURM_SUBMIT_DIR:/work ~/hpc4astro/containers/julia.sif julia --project=/work  -- /work/ex1_serial.jl 1000000000
 echo "Julia exited"
 date
 
