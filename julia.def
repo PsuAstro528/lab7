@@ -1,0 +1,15 @@
+BootStrap: docker
+From: julia:1.11.6
+
+%post
+   apt-get -y update
+   apt-get clean
+   # Make mount points for Roar systems
+   mkdir -p /scratch /home /work /storage/ehome /storage/ework /storage/egroup /storage/home /storage/work /storage/group /storage/icds
+
+%environment
+   #export PATH=/usr/games:$PATH
+
+%labels
+   Setup Julia.  Create mountpoints for Roar.
+
