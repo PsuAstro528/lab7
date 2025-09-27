@@ -6,10 +6,10 @@
 ## Time requested: 0 hours, 5 minutes, 0 seconds
 #SBATCH --time=0:05:00 
 
-## Ask for one node with four cpus per node
+## Ask for one node with 4 cpu cores per node
 #SBATCH --nodes=1 
 #SBATCH --ntasks-per-node=4
-##SBATCH --ntasks=4 
+##SBATCH --ntasks=8 
 
 ## Promise that each processor will use no more than 1GB of RAM
 #SBATCH --mem-per-cpu=1GB
@@ -36,6 +36,8 @@ echo $SLURM_NODELIST
 
 echo "Activing environment with that provides Julia 1.9.2"
 source /storage/ehome/ebf11/hpc4astro/astro_528/scripts/env_setup
+
+export JULIA_NUM_THREADS=1      # Reset so only one thread per process
 
 echo "About to change into $SLURM_SUBMIT_DIR"
 cd $SLURM_SUBMIT_DIR            # Change into directory where job was submitted from
