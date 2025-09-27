@@ -8,11 +8,11 @@
 
 ## Ask for multiple CPU cores on one node
 #SBATCH --nodes=1 
-#SBATCH --ntasks-per-node=4
-###SBATCH --ntasks=4 
+#SBATCH --ntasks-per-node=16
+###SBATCH --ntasks=16
 
-## Promise that each processor will use no more than 1GB of RAM
-#SBATCH --mem-per-cpu=1GB
+## Promise that each processor will use no more than 4GB of RAM
+#SBATCH --mem-per-cpu=4GB
 
 ## Save STDOUT and STDERR into one file (%j will expand to become the SLURM job id)
 #SBATCH --output=ex2_parallel_1node_%j.log

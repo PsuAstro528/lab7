@@ -11,8 +11,11 @@
 #SBATCH --ntasks-per-node=8
 ####SBATCH --ntasks=16   
 
-## Promise that each processor will use no more than 1GB of RAM
-#SBATCH --mem=4GB
+## Promise that each processor will use no more than 4GB of RAM
+#SBATCH --mem-per-cpu=4GB
+## OR 
+## Promise that each processor will use no more than 8GB of RAM
+##SBATCH --mem=16GB
 
 ## Save STDOUT and STDERR into one file (%j will expand to become the SLURM job id)
 #SBATCH --output=ex2_parallel_combo_%j.log
@@ -43,11 +46,17 @@ echo "About to change into $SLURM_SUBMIT_DIR"
 cd $SLURM_SUBMIT_DIR            # Change into directory where job was submitted from
 
 export JULIA_PROJECT=`pwd`
-scontrol show hostnames > machinefile.$SLURM_JOB_ID   # Don't repeat nodes
+export JULIA_NUM_THREADS=$SLURM_NTASKS_PER_NODE
+# Repeat nodes if setting ntasks, since likely uneven distribution of tasks across nodes
+srun -l /usr/bin/hostname | sort | awk '{print $2}' > machinefile.$SLURM_JOB_ID   
+# Don't repeat nodes if setting ntasks-per-node and using multiple threads per node
+#scontrol show hostnames | sed -e s/^/$SLURM_NTASKS_PER_NODE*/ > machinefile.$SLURM_JOB_ID   
+
 
 date
 echo "About to start Julia, using machine file to ssh to each of $SLURM_NNODES nodes, starting $SLURM_NTASKS_PER_NODE threads on each."
-julia --project=. -t $SLURM_NTASKS_PER_NODE --machine-file machinefile.$SLURM_JOB_ID   ex2_run_nb.jl
+julia --project=. --machine-file machinefile.$SLURM_JOB_ID   ex2_run_nb.jl
+#julia --project=. -t $SLURM_NTASKS_PER_NODE --machine-file machinefile.$SLURM_JOB_ID   ex2_run_nb.jl
 #echo "About to start Julia, using Slurm Cluster Manager to connect to $SLURM_NTASKS_PER_NODE worker procesess on each of $SLURM_NNODES nodes."
 #julia --project=. -e 'using Distributed, ClusterManagers; addprocs(SlurmManager(parse(Int,ENV["SLURM_NNODES"])*parse(Int,ENV["SLURM_NTASKS_PER_NODE"])), exeflags=["--project=.",], );   include("ex2_run_nb.jl") '  
 #julia --project=. -e 'using Distributed, SlurmClusterManager; addprocs(SlurmManager(), exeflags=["--project=.",], );   include("ex2_run_nb.jl") '  
