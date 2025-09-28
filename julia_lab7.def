@@ -14,7 +14,7 @@ From: julia:1.11.6
 
    # Make directory for julia depot for packages preinstalled into the container
    mkdir -p /julia_depot
-   JULIA_DEPOT_PATH="/julia_depot"
+   export JULIA_DEPOT_PATH="/julia_depot"
 
    # Set repository to be cloned into container
    REPO_URL="https://github.com/PsuAstro528/lab7.git" # Use http version here
@@ -24,10 +24,11 @@ From: julia:1.11.6
    git clone ${REPO_URL} ${PKG_DIR}
 
    # Run Julia to install dependencies for the newly cloned package
-   julia --project=@. -e 'using Pkg; Pkg.develop(path="'${PKG_DIR}'"); Pkg.instantiate(); Pkg.precompile(); '
+   #julia --project=@. -e 'using Pkg; Pkg.develop(path="'${PKG_DIR}'"); Pkg.instantiate(); Pkg.precompile(); '
+   julia --project=${PKG_DIR} -e 'using Pkg; Pkg.instantiate(); Pkg.precompile(); '
 
    # Install more common Julia packages into container depot
-   # julia --project=@. -e 'import Pkg; Pkg.add(["Pluto","IJulia"]); Pkg.instantiate(); Pkg.precompile(); '
+   # julia -e 'import Pkg; Pkg.add(["Pluto","IJulia"]); Pkg.instantiate(); Pkg.precompile(); '
 
    # Clean up if installed packages with apt
    apt-get clean

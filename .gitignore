@@ -10,13 +10,17 @@ src/.ipynb_checkpoints
 *backkup*.jl
 core*
 
-# Inputs of job array example
+# Inputs/outputs of ex1 job array example
 ex1_job_array_in.csv
+ex1_out*.csv
 
 # Outputs of second exercise
 ex2_out*.csv
 ex2_*.png
 ex*.log
+
+# apptainer images
+*.sif
 
 # Other unnecessary files
 julia-*.out
