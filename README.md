@@ -26,7 +26,7 @@ Note that the number of cores you are allocated when using the JupyterLab Server
 ```sh
 git clone REPO_URL
 cd REPO_DIR
-julia --project -e 'import Pkg; Pkg.build()'
+julia --project deps/build.jl 
 julia --project ex1_serial.jl 1000000000
 ```
 ### Submitting & Running a Serial Job
