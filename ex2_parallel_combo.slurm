@@ -8,8 +8,8 @@
 
 ## Ask for eight CPU cores on each of two nodes
 #SBATCH --nodes=2 
-#SBATCH --ntasks-per-node=8
-####SBATCH --ntasks=16   
+#SBATCH --ntasks-per-node=4
+####SBATCH --ntasks=8   
 
 ## Promise that each processor will use no more than 4GB of RAM
 #SBATCH --mem-per-cpu=4GB
