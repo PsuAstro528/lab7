@@ -15,6 +15,7 @@ From: julia:1.11.6
    # Make directory for julia depot for packages preinstalled into the container
    mkdir -p /julia_depot
    export JULIA_DEPOT_PATH="/julia_depot"
+   export JULIA_CPU_TARGET="generic;skylake-avx512,clone_all;znver4,clone_all"
 
    # Set repository to be cloned into container
    REPO_URL="https://github.com/PsuAstro528/lab7.git" # Use http version here

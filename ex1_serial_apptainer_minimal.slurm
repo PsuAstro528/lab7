@@ -3,15 +3,15 @@
 #SBATCH --partition=standard
 #SBATCH --account=hpc4astro_crch_fall2025
 
-## Time requested: 0 hours, 5 minutes, 0 seconds
-#SBATCH --time=0:05:00 
+## Time requested: 0 hours, 30 minutes, 0 seconds
+#SBATCH --time=0:30:00 
 
 ## Ask for one core on one node
 #SBATCH --nodes=1 
 #SBATCH --ntasks=1 
 
 ## Promise that each processor will use no more than 1GB of RAM
-#SBATCH --mem-per-cpu=1GB
+#SBATCH --mem-per-cpu=8GB
 
 ## Save STDOUT and STDERR into one file (%j will expand to become the SLURM job id)
 #SBATCH --output=ex1_apptainer_%j.log
@@ -37,8 +37,8 @@ echo "About to change into $SLURM_SUBMIT_DIR"
 cd $SLURM_SUBMIT_DIR            # Change into directory where job was submitted from
 
 date
-echo "About to ensure Julia depot has instantiated dependencies in same Julia Depot as used for rest of class (likely will cause problems if calling Python or R)"
-apptainer run -H ~/container_home -B $PWD:/work ~/hpc4astro/containers/julia_minimal.sif julia --project=/work -e 'import Pkg; Pkg.instantiate()'
+echo "About to ensure Julia has access to the dependencies it needs when running from the minimal julia container (by installing them in your julia depot outside the container)."
+apptainer run -H ~/container_home -B $PWD:/work ~/hpc4astro/containers/julia_minimal.sif julia --project=/work -e 'import Pkg; Pkg.instantiate(); Pkg.precompile()'
 date
 echo "About to run Julia"
 apptainer run -H ~/container_home -B $PWD:/work ~/hpc4astro/containers/julia_minimal.sif julia --project=/work  -- /work/ex1_serial.jl 1000000000
