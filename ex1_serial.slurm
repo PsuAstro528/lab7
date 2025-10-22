@@ -18,10 +18,10 @@
 ## Optionally could uncomment line below to write STDERR to a separate file
 ##SBATCH --error=ex1_serial_%j.stderr  
 
-## Specificy job name, so easy to find using squeue –u
+## Specify job name, so easy to find using squeue –u
 #SBATCH --job-name=ex1_serial
 
-## Uncomment next two lines (by removing one of #'s in each line) and replace with your email if you want to be notifed when jobs start and stop
+## Uncomment next two lines (by removing one of #'s in each line) and replace with your email if you want to be notified when jobs start and stop
 ##SBATCH --mail-user=YOUR_EMAIL_HERE@psu.edu
 ## Ask for emails when jobs begins, ends or fails (options are ALL, NONE, BEGIN, END, FAIL)
 #SBATCH --mail-type=ALL
@@ -30,7 +30,7 @@ echo "Starting job $SLURM_JOB_NAME"
 echo "Job id: $SLURM_JOB_ID"
 date
 
-echo "Activing environment with that provides Julia 1.11.2"
+echo "Activing environment that provides Julia 1.11.2"
 source /storage/ehome/ebf11/hpc4astro/astro_528/scripts/env_setup
 
 echo "About to change into $SLURM_SUBMIT_DIR"

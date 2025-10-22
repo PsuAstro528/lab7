@@ -19,7 +19,7 @@
 ## Optionally could uncomment line below to write STDERR to a separate file
 ##SBATCH --error=ex1_parallel_1node_%j.stderr  
 
-## Specificy job name, so easy to find using squeue –u
+## Specify job name, so easy to find using squeue –u
 #SBATCH --job-name=ex1_parallel_1node
 
 ## Uncomment next two lines (by removing one of #'s in each line) and replace with your email if you want to be notifed when jobs start and stop
@@ -34,7 +34,7 @@ date
 echo "This job was assigned the following nodes"
 echo $SLURM_NODELIST
 
-echo "Activing environment with that provides Julia 1.9.2"
+echo "Activing environment that provides Julia 1.11.2"
 source /storage/ehome/ebf11/hpc4astro/astro_528/scripts/env_setup
 
 export JULIA_NUM_THREADS=1      # Reset so only one thread per process

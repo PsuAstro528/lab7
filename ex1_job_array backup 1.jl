@@ -39,7 +39,7 @@ Random.seed!(s)
 # Run once to force compile of needed functions
 calc_pi_monte_carlo(1)
 stats = @timed pi_estimate = calc_pi_monte_carlo(n)
-println("# After ", n, " iterations, array_id= ", job_arrayid, " estimated pi to be...")
+println("# After ", n, " itterations, array_id= ", job_arrayid, " estimated pi to be...")
 println(pi_estimate)
 
 # Write output to file to be analyzed later
