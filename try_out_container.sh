@@ -1,3 +1,2 @@
-mkdir -p ~/container_home
-apptainer shell -H ~/container_home -B $PWD:/work julia_minimal.sif
+apptainer shell -B $PWD:/work ~/hpc4astro/containers/julia_minimal.sif
 
