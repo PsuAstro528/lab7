@@ -36,7 +36,7 @@ echo $SLURM_NODELIST
 
 #env |grep SLURM                 # Uncomment to print slurm environment variables
 
-echo "Activing environment that provides Julia 1.9.2"
+echo "Activing environment that provides Julia 1.11.2"
 source /storage/ehome/ebf11/hpc4astro/astro_528/scripts/env_setup
 
 echo "About to change into $SLURM_SUBMIT_DIR"
