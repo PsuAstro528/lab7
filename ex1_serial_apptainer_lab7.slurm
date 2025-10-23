@@ -10,8 +10,8 @@
 #SBATCH --nodes=1 
 #SBATCH --ntasks=1 
 
-## Promise that each processor will use no more than 1GB of RAM
-#SBATCH --mem-per-cpu=1GB
+## Promise that each CPU core will use no more than 4GB of RAM
+#SBATCH --mem-per-cpu=4GB
 
 ## Save STDOUT and STDERR into one file (%j will expand to become the SLURM job id)
 #SBATCH --output=ex1_apptainer_%j.log

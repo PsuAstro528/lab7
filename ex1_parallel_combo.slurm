@@ -10,8 +10,8 @@
 #SBATCH --nodes=2     
 #SBATCH --ntasks-per-node=2
 
-## Promise that each CPU will use no more than 4GB of RAM
-#SBATCH --mem=4GB
+## Promise that each node will use no more than 8GB of RAM
+#SBATCH --mem=8GB
 
 ## Save STDOUT and STDERR into one file (%j will expand to become the SLURM job id)
 #SBATCH --output=ex1_parallel_combo_%j.log
